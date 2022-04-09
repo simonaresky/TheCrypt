@@ -5,7 +5,7 @@
   <br>
 </h1>
 
-![TheCrypt](crypt.jpg)
+![TheCrypt](readme/crypt.jpg)
 
 <h4 align="center">A minimal Password Manager / Generator</h4>
 
@@ -13,10 +13,7 @@
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
   <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
   <a href="#license">License</a>
 </p>
 
@@ -26,6 +23,7 @@
 * Minimal graphical interface
 * Data's storage on SQL DB
 * Strong password generation
+* Password's strength check
 * 2FA via external storage
 
 
@@ -53,11 +51,6 @@ This software uses the following open source packages:
 
 <a href="https://www.buymeacoffee.com/" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
-
-## You may also like...
-
-#- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
-#- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
 
 ## License
 
