@@ -32,7 +32,7 @@ class App(tk.Tk):
         # label
         ttk.Label(text='User:').grid(row=10, column=0, sticky='w')
         ttk.Label(text='Passwd: ').grid(row=11, column=0, sticky='w')
-        tk.Label(text='URL:').grid(row=12, column=0, sticky='w')
+        ttk.Label(text='URL:').grid(row=12, column=0, sticky='w')
         ttk.Label(text='User:').grid(row=14, column=0, sticky='w')
         ttk.Label(text='TheCrypt:').grid(row=15, column=0, sticky='w')
         ttk.Label(text='URL:').grid(row=16, column=0, sticky='w')
