@@ -1,9 +1,25 @@
+import sqlalchemy as db
+from sqlalchemy.sql import func
+from sqlalchemy.dialects import sqlite
+from os import path
 import tkinter as tk
 import tkinter as ttk
 from tkinter import *
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
 from PIL import Image, ImageTk
+import pwd_strenght_check
+import pwd_master
+
+metadata_obj = db.MetaData()
+
+the_crypt = db.Table('the_crypt', metadata_obj,
+    db.Column('id', db.Integer, primary_key=True),
+    db.Column('username', db.String(30)),
+    db.Column('password', db.String(50)),
+    db.Column('date_created', db.DateTime(timezone=True), default=func.now()),
+    db.Column('url', db.String(50))
+)
 
 class App(tk.Tk):
     def __init__(self):
@@ -13,12 +29,14 @@ class App(tk.Tk):
         self.image = Image.open('thecrypt.jpg')
         self.photo = ImageTk.PhotoImage(self.image)
         self.create_widgets()
-
-    def encryption_magic(self):
-        disposal = askstring('Encryption Password', 'Please provide a strong password')
-        print(disposal)
         
     def create_widgets(self):
+        DB_NAME = 'TheCrypt.db'
+        engine = db.create_engine(f'sqlite:///{DB_NAME}')
+
+        if not path.exists(f"./{DB_NAME}"):
+            metadata_obj.create_all(engine)
+        
         self.v1 = tk.IntVar()
         self.alpha_check = tk.IntVar()
         self.special_check = tk.IntVar()
@@ -66,7 +84,7 @@ class App(tk.Tk):
 
 
         # Slider Entry
-        self.slide_entry = ttk.Scale(self, variable=self.v1, from_=1, to=32, orient=HORIZONTAL)
+        self.slide_entry = ttk.Scale(self, variable=self.v1, from_=12, to=32, orient=HORIZONTAL)
         self.slide_entry.grid(row=17, column=1)
 
         # # Checknutton
@@ -77,10 +95,10 @@ class App(tk.Tk):
         self.special_entry = ttk.Checkbutton(self, variable=self.special_check, text='')
         self.special_entry.grid(row=19, column=1)
 
-        # First Add Button
+        # Password of choice Add Button
         self.send_button = ttk.Button(text='Add Custom', command=self.validate_data).grid(row=13, padx=5, pady=5, column=1, sticky='s')
 
-        # Second Add Button
+        # The Crypt Passowrd Button
         self.send_button = ttk.Button(text='The Crypt', command=self.validate_data).grid(row=20, padx=5, pady=5, column=1, sticky='s')
 
     def askMe(self, slide):
@@ -95,21 +113,21 @@ class App(tk.Tk):
     def validate_data(self):
         user = self.user_entry.get()
         passwd = self.passwd_entry.get()
-        slide = self.v1.get()
-        alpha = self.alpha_check.get()
-        special = self.special_check.get()
         if user != "":
-            print(user)
-        else:
-            messagebox.showerror('Error', 'User Please')
-        if passwd == "":
-            if slide <= 7:
-                self.askMe(slide)
+            #print(user)
+            if passwd != "":
+                #print(passwd)
+                data = pwd_strenght_check.password_check(passwd)
+                if data:
+                    master_password_input = askstring("Master Password", "Please provide the master password")
+                    if len(master_password_input) > 0:
+                        pwd_master.encrypt_password(master_password_input, data)
+                    else:
+                        messagebox.showwarning('error', 'Something went wrong!')
             else:
-                self.encryption_magic()
-        else:
-            messagebox.showwarning('Missing data', "No Password provided, I'll create one")
-            self.encryption_magic()
+                messagebox.showerror('Error', 'User or password are missing!')
+    
+    
 
 
 if __name__ == '__main__':

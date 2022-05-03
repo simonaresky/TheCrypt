@@ -1,6 +1,7 @@
 import secrets
 import string
 
+
 def password_gen(password_length):
 
     characters = string.ascii_letters + string.digits + string.punctuation
@@ -12,3 +13,4 @@ def password_gen(password_length):
     #return secure_password
 
 password_gen(20)
+
